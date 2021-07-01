@@ -5,4 +5,6 @@ This repository demonstrates how to do basic things with SAS, just in case, magi
 1. Export data as .csv
 2. Batch character to dates
 3. Drop columns with all missing
-4. TBC
+4. SAS loop through same pre-fix
+5. SAS loop through diff index-fix
+6. array loop through list of variables
