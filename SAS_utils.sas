@@ -70,6 +70,49 @@ run;
 %dropmissing(dataset_messy, dataset_useful);
 
 
+/************************* SAS loop through vars with same prefix ********************/
+%let gene_list = kras pdl1 clb nras naf tet2 smcla asxl1 runx1;
+/* One thing I really don't understand is SAS function takes variable directly from global environment! */
+%macro flag_genes; 
+data finished_flagging;
+	set tobe_flagged;
+	%do i=1 %to %sysfunc(countw(&gene_list.));
+		%let _gene_var = %scan(&gene_list., &i.);
+	
+		fl_&_gene_var. = (&_gene_var.fl = "Y");
+		fl_&_gene_var._miss = (&_gene_var.fl = "");
+	%end;
+	
+	fl_tot_n = (fl_kras_miss = 0 and fl_kras_miss = 0 and fl_kras_miss = 0);
+	fl_tot_miss = (fl_kras_miss = 1 or fl_kras_miss = 1 or fl_kras_miss = 1);
+	
+	keep fl_: ;
+run;
+%mend;
+%flag_mutations;
+
+
+/******************* SAS loop through vars with diff indexing -fix ********************/
+%macro count_days;
+	%do i = 1 to 20;
+	/* Note this is not a double loop */
+	%let j = %eval(i+1); 
+	if a_day&i._num > 0 and a_day&i._cat = "A" then do;
+		count_&i. = a_day&i._num;
+		count_&j._new = a_day&j._num;
+	end;
+	%end;
+%mend;
+
+%count_days;
+
+/******************************** SAS for-loop for vars *******************************/
+array somevars var_high short_var tomorrow still not holiday;
+do over somevars;
+	if somevars ^= 1 then somevars = 0;
+end;
+
+
 
 
 
