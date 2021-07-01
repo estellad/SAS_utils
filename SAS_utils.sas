@@ -11,7 +11,7 @@ libname raw “\\folder\to\nowhere”;
 	RUN;
  %mend;
 
-%export(dataset = something, name = Something, sheet = tabA, type = csv)
+%export(dataset = something, name = Something, sheet = tabA, type = csv);
 
 
 %let output = \\folder\to\nowhere;
@@ -38,7 +38,7 @@ run;
 	%end;
 %mend;
 
-%chartodate
+%chartodate;
 
 
 /************************* DROP Columns With All Missing ********************/
